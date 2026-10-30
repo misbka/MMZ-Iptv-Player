@@ -1,3 +1,6 @@
+![](https://i.ibb.co/35zzbQct/a1.png)
+
+
 # MMZ IPTV PLAYER
 
 Player de IPTV para **Windows e Linux** construído com **Electron + React + TypeScript**.
