@@ -1,272 +1,227 @@
 ![](https://i.ibb.co/35zzbQct/a1.png)
 
-
 # MMZ IPTV PLAYER
 
-Player de IPTV para **Windows e Linux** construído com **Electron + React + TypeScript**.
-Interface escura (Dark Mode) inspirada na experiência da **Claro TV+ / Claro Box TV**, com
-navegação **por teclado e controle remoto** (estilo Smart TV / Android TV).
+An IPTV player for **Windows and Linux**, built with **Electron + React + TypeScript**.
+
+Dark Mode interface inspired by the **Claro TV+ / Claro Box TV** experience, featuring **keyboard and remote control navigation** (Smart TV / Android TV style).
 
 ![status](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-blue) ![stack](https://img.shields.io/badge/stack-Electron%20%2B%20React%20%2B%20Vite-orange)
 
 ---
 
-## ✨ Funcionalidades
+## ✨ Features
 
-- 📺 **Canais ao Vivo, Filmes (VOD) e Séries** — separados **pelo conteúdo real de cada stream**,
-  e não só pelo nome do grupo: extensões de vídeo (`mp4`, `mkv`…) e caminhos `/vod/` viram
-  Filmes/Séries, enquanto `m3u8`, `/live/`, `chunklist` etc. continuam ao vivo mesmo que o grupo se
-  chame "Filmes e Séries" (caso comum em listas IPTV).
-- 🌐 **Multi-idioma** — interface em **Português (Brasil), English e Español**, com datas, horas e
-  erros também traduzidos. O idioma fica salvo nas Preferências e é aplicado também nas mensagens
-  do processo principal.
-- 🖱️ **Mouse de primeira classe** — além do teclado/controle, tudo é clicável: passar o mouse por
-  um card já move o anel de foco (clique e setas agem sobre o mesmo item), as linhas da Home e a
-  barra de categorias têm barra de rolagem visível e o player ganhou botões de trocar de canal.
-  O foco **não é roubado** por um ponteiro parado: ele só acompanha o mouse quando ele se move.
-- 📋 **Gerenciador de listas M3U/M3U8** — adicione por URL ou arquivo local; parse automático de
-  nome, logo, categoria (`group`) e URL do stream, com **cache local** (funciona offline depois do
-  primeiro carregamento). **URLs sem extensão funcionam** (`https://pastebin.com/raw/abc123`), e
-  quando algo falha o app explica o motivo (página HTML no lugar da lista, arquivo inexistente,
-  endereço sem `http://`, rede fora do ar...).
-- 📅 **EPG (XMLTV)** — carregue um guia em XML (URL ou arquivo). Os programas são cruzados com os
-  canais pelo `tvg-id`, exibindo **programa atual e próximo** nos cards, no player e no guia
-  completo (tecla `G`).
-- 🎬 **Player embutido** — HLS/m3u8 via `hls.js` (com worker) e mídia nativa para MP4/MKV, com
-  volume, mudo, tela cheia, barra de progresso para VOD e **reconexão automática** em caso de falha
-  do stream.
-- ⚡ **Zaping rápido** — troque de canal com `↑` / `↓` direto no player, sem sair da tela cheia.
-- 🎮 **Navegação Keyboard First** — toda a interface é operada por setas, `Enter` e `Esc`, com
-  foco visual claro (anel brilhante), simulando a experiência de Smart TV — e **sem abrir mão do
-  mouse**, que executa as mesmas ações.
-- 🚀 **Alta performance** — listas com milhares de canais são exibidas com **virtualização**
-  (`react-window`), renderizando apenas os cards visíveis.
+- 📺 **Live TV, Movies (VOD), and Series** — categorized based on **the actual content of each stream**, not just the group name: video extensions (`mp4`, `mkv`...) and `/vod/` paths are classified as Movies/Series, while `m3u8`, `/live/`, `chunklist`, etc. remain Live TV, even if the group is named "Movies and Series" (a common issue with IPTV playlists).
+- 🌐 **Multi-language support** — interface available in **Portuguese (Brazil), English, and Spanish**, including translated dates, times, and error messages. The selected language is saved in Preferences and also applied to messages from the main process.
+- 🖱️ **Full mouse support** — in addition to keyboard/remote navigation, everything is clickable: hovering over a card moves the focus ring (clicks and arrow keys act on the same item), Home rows and the category bar have visible scrollbars, and the player includes channel-switching buttons. Focus is **never stolen** by a stationary pointer: it only follows the mouse when it moves.
+- 📋 **M3U/M3U8 Playlist Manager** — add playlists via URL or local file; automatically parses names, logos, categories (`group`), and stream URLs, with **local caching** (works offline after the first load). **URLs without file extensions are supported** (`https://pastebin.com/raw/abc123`), and when something goes wrong, the app explains why (HTML page instead of a playlist, missing file, address without `http://`, network unavailable, etc.).
+- 📅 **EPG (XMLTV)** — load an XML program guide from a URL or local file. Programs are matched to channels using `tvg-id`, displaying the **current and next programs** on cards, in the player, and in the full guide (press `G`).
+- 🎬 **Built-in player** — HLS/m3u8 playback via `hls.js` (with worker support) and native media playback for MP4/MKV, featuring volume control, mute, fullscreen, a VOD progress bar, and **automatic reconnection** if a stream fails.
+- ⚡ **Quick channel zapping** — switch channels using `↑` / `↓` directly in the player, without leaving fullscreen mode.
+- 🎮 **Keyboard-first navigation** — the entire interface can be operated using arrow keys, `Enter`, and `Esc`, with clear visual focus (glowing ring), simulating the Smart TV experience — **without sacrificing mouse support**, as both input methods perform the same actions.
+- 🚀 **High performance** — playlists containing thousands of channels are displayed using **virtualization** (`react-window`), rendering only visible cards.
 
-## 🖥️ Atalhos de teclado
+## 🖥️ Keyboard Shortcuts
 
-| Tecla | Ação |
+| Key | Action |
 | --- | --- |
-| `↑ ↓ ← →` | Navegar em menus, categorias e grades |
-| `Enter` / `Espaço` | Abrir / reproduzir / pausar |
-| `Esc` | Voltar (fecha guia → sai da tela cheia → fecha player → limpa busca → menu lateral) |
-| `Tab` (na grade) | Focar o menu lateral |
-| Letras + `Backspace` | Busca incremental nos canais |
-| `↑ ↓` (no player) | **Zaping** — trocar de canal |
-| `← →` (no player, VOD) | Voltar / avançar 10 s |
-| `+` / `-` e `M` | Volume e mudo |
-| `G` | Guia de programação (EPG) do canal |
-| `I` | Informações do canal/programa |
-| `F` / `F11` | Tela cheia |
+| `↑ ↓ ← →` | Navigate menus, categories, and grids |
+| `Enter` / `Space` | Open / play / pause |
+| `Esc` | Go back (closes guide → exits fullscreen → closes player → clears search → sidebar menu) |
+| `Tab` (in grid) | Focus the sidebar menu |
+| Letters + `Backspace` | Incremental channel search |
+| `↑ ↓` (in player) | **Channel zapping** — switch channels |
+| `← →` (in player, VOD) | Rewind / fast-forward 10 seconds |
+| `+` / `-` and `M` | Volume and mute |
+| `G` | Channel program guide (EPG) |
+| `I` | Channel/program information |
+| `F` / `F11` | Fullscreen |
 
-### 🖱️ Uso com mouse
+### 🖱️ Mouse Usage
 
-- **Passar o mouse** sobre um card, item do menu ou chip de categoria move o anel de foco — o que
-  você aponta é o que `Enter` abre.
-- **Clicar** reproduz o canal/filme ou abre a seção, exatamente como `Enter`.
-- **Arrastar / rolar** as linhas da Home e a barra de categorias (barras de rolagem visíveis).
-- Os botões do player (mudo, volume, tela cheia, informações, trocar de canal) são clicáveis.
-- O foco só segue o mouse quando ele **se move**: se você está navegando por teclado/controle e o
-  ponteiro fica parado sobre um card, nada muda.
+- **Hovering** over a card, menu item, or category chip moves the focus ring — whatever you point at is what `Enter` will open.
+- **Clicking** plays a channel/movie or opens a section, exactly like pressing `Enter`.
+- **Drag / scroll** through Home rows and the category bar (visible scrollbars).
+- Player buttons (mute, volume, fullscreen, information, channel switching) are clickable.
+- Focus only follows the mouse when it **moves**: if you're navigating with the keyboard/remote and the pointer stays still over a card, nothing changes.
 
 ---
 
-## 🌐 Idioma
+## 🌐 Language
 
-Em **Ajustes → Preferências → Idioma do app**, escolha **Português (Brasil)**, **English** ou
-**Español**. A interface, os erros e as datas/horas são traduzidos imediatamente e a escolha fica
-salva para as próximas execuções.
+Go to **Settings → Preferences → App Language** and choose **Português (Brasil)**, **English**, or **Español**. The interface, error messages, dates, and times are translated immediately, and your selection is saved for future sessions.
 
 ---
 
-## 🛠️ Stack tecnológica
+## 🛠️ Technology Stack
 
-| Camada | Tecnologia |
+| Layer | Technology |
 | --- | --- |
 | Core | Electron (latest stable) + electron-vite |
 | Frontend | React 18 + TypeScript + Vite |
-| Estilo | Tailwind CSS |
-| Ícones | lucide-react |
-| Player | `hls.js` (HLS/m3u8) + `<video>` nativo |
-| Estado | Zustand |
-| Parse M3U | `iptv-playlist-parser` (+ parser manual de fallback) |
-| Parse XMLTV | `fast-xml-parser` |
-| Virtualização | `react-window` |
-| Build | electron-builder (NSIS no Windows, AppImage + deb no Linux) |
+| Styling | Tailwind CSS |
+| Icons | lucide-react |
+| Player | `hls.js` (HLS/m3u8) + native `<video>` |
+| State Management | Zustand |
+| M3U Parsing | `iptv-playlist-parser` (+ manual fallback parser) |
+| XMLTV Parsing | `fast-xml-parser` |
+| Virtualization | `react-window` |
+| Build | electron-builder (NSIS on Windows, AppImage + deb on Linux) |
 
 ---
 
-## 📦 Instalação
+## 📦 Installation
 
-Requisitos: **Node.js 18+** (recomendado 20 LTS) e **npm**.
+Requirements: **Node.js 18+** (Node.js 20 LTS recommended) and **npm**.
 
 ```bash
-# 1. Clone o repositório
-git clone <url-do-repositorio> mmz-iptv-player
+# 1. Clone the repository
+git clone <repository-url> mmz-iptv-player
 cd mmz-iptv-player
 
-# 2. Instale as dependências
+# 2. Install dependencies
 npm install
 ```
 
-## ▶️ Desenvolvimento
+## ▶️ Development
 
 ```bash
 npm run dev
 ```
 
-Sobe o Electron com Hot Module Replacement (renderer) via `electron-vite`.
+Starts Electron with Hot Module Replacement (renderer) via `electron-vite`.
 
-Comandos úteis:
+Useful commands:
 
 ```bash
-npm run typecheck      # valida tipos (main + renderer)
-npm test               # testes de fumaça (parsers M3U/XMLTV + serviços)
-npm run test:e2e       # teste visual E2E (abre o app; valida teclado, mouse, VOD e idiomas)
-npm run test:e2e -- 9400   # idem, usando outra porta de debug (se 9380 já estiver em uso)
-npm run build          # gera o bundle de produção em ./out
-npm run start          # executa o bundle gerado (preview)
-npm run icon           # regenera build/icon.png (512x512)
+npm run typecheck      # validates types (main + renderer)
+npm test               # smoke tests (M3U/XMLTV parsers + services)
+npm run test:e2e       # visual E2E test (opens the app; checks keyboard, mouse, VOD, and languages)
+npm run test:e2e -- 9400   # same, using a different debug port (if 9380 is already in use)
+npm run build          # generates the production bundle in ./out
+npm run start          # runs the generated bundle (preview)
+npm run icon           # regenerates build/icon.png (512x512)
 ```
 
-> 💡 **Modo portátil:** defina a variável de ambiente `MMZ_USER_DATA_DIR` para redirecionar o
-> diretório de dados (cache de listas e EPG). Útil para rodar o app de um pendrive ou em testes.
+> 💡 **Portable mode:** set the `MMZ_USER_DATA_DIR` environment variable to redirect the data directory (playlist and EPG cache). Useful for running the app from a USB drive or during testing.
 
-## 📦 Build / Distribuição
+## 📦 Build / Distribution
 
 ```bash
-# Windows -> instalador NSIS (.exe) em ./dist
+# Windows -> NSIS installer (.exe) in ./dist
 npm run dist:win
 
-# Linux -> AppImage e .deb em ./dist
+# Linux -> AppImage and .deb in ./dist
 npm run dist:linux
 
-# Ambas as plataformas (requer ambientes compatíveis)
+# Both platforms (requires compatible environments)
 npm run dist
 ```
 
-> O build do Windows deve ser feito em uma máquina Windows (ou com Wine configurado).
-> O `postinstall` roda `electron-builder install-app-deps`, rebuildando as dependências nativas
-> para a versão do Electron utilizada.
+> The Windows build should be performed on a Windows machine (or with Wine properly configured).
+> The `postinstall` script runs `electron-builder install-app-deps`, rebuilding native dependencies for the Electron version being used.
 
 ---
 
-## 📖 Instruções de uso
+## 📖 Usage Instructions
 
-### 1. Adicionar uma lista M3U
+### 1. Adding an M3U Playlist
 
-1. Abra **Ajustes** (ícone de engrenagem no menu lateral).
-2. Em **Listas M3U**, informe um nome (opcional) e a **URL** da sua lista
-   (`https://servidor.com/playlist.m3u`) — ou clique em **Selecionar arquivo local** para usar um
-   `.m3u`/`.m3u8` do seu computador.
-   - A URL **não precisa terminar em `.m3u`/`.m3u8`**: endereços de conteúdo cru como
-     `https://pastebin.com/raw/VTgpRK2k` ou `https://servidor.com/get.php?...` também funcionam.
-   - Se o app não conseguir adicionar, ele diz por quê: resposta que é uma **página HTML** (a URL
-     não é a lista em si), **arquivo inexistente**, endereço **sem `http://`**, ou falha de rede.
-3. Clique em **Adicionar lista**. O app faz o parse automático e mostra quantos canais foram
-   carregados.
-4. Os canais aparecem em **Canais ao Vivo**, **Filmes** e **Séries**, agrupados automaticamente
-   pelos grupos do arquivo.
+1. Open **Settings** (gear icon in the sidebar).
+2. Under **M3U Playlists**, enter a name (optional) and your playlist **URL** (`https://server.com/playlist.m3u`) — or click **Select local file** to use an `.m3u`/`.m3u8` file from your computer.
+   - The URL **does not need to end in `.m3u`/`.m3u8`**: raw content URLs such as `https://pastebin.com/raw/VTgpRK2k` or `https://server.com/get.php?...` are also supported.
+   - If the app cannot add the playlist, it explains why: the response is an **HTML page** (the URL does not point directly to the playlist), the **file does not exist**, the address is **missing `http://`**, or there is a network error.
+3. Click **Add Playlist**. The app automatically parses the playlist and displays how many channels were loaded.
+4. Channels appear under **Live TV**, **Movies**, and **Series**, automatically grouped according to the groups defined in the file.
 
-> 💡 **Filmes e Séries aparecem só quando a lista realmente tem VOD.** A separação considera o
-> formato de cada stream: um canal `m3u8` de transmissão linear continua em **Canais ao Vivo**
-> mesmo que esteja dentro de um grupo chamado "Filmes e Séries". Se a sua lista mistura VOD
-> "escondido" em grupos de canais ao vivo, ative **Ajustes → Preferências → Exibir também canais
-> lineares cujo grupo indica filme/série**.
+> 💡 **Movies and Series only appear when the playlist actually contains VOD content.** Classification is based on each stream's format: an `m3u8` linear broadcast channel remains under **Live TV**, even if it belongs to a group named "Movies and Series". If your playlist mixes VOD content "hidden" inside live TV groups, enable **Settings → Preferences → Also show linear channels whose group indicates movies/series**.
 
-> 💡 Depois do primeiro carregamento, os dados ficam em cache no diretório de dados do usuário
-> (`userData/mmz-data`), então o app continua utilizável **offline**. Use **Atualizar** para
-> sincronizar a lista novamente.
+> 💡 After the first load, data is cached in the user's data directory (`userData/mmz-data`), allowing the app to remain usable **offline**. Use **Refresh** to synchronize the playlist again.
 
-### 2. Carregar o EPG (guia de programação)
+### 2. Loading the EPG (Program Guide)
 
-1. Em **Ajustes → Guia de programação (EPG)**, informe a **URL do XMLTV** (aceita `.xml` e
-   `.xml.gz`) ou selecione um arquivo local.
-2. Clique em **Carregar EPG**. O app informa a quantidade de canais e programas indexados.
-3. Na interface, os cards passam a mostrar o **programa atual**, barra de progresso e o **próximo
-   programa**. No player, pressione `I` para os detalhes ou `G` para o guia completo do canal.
+1. Go to **Settings → Program Guide (EPG)** and enter the **XMLTV URL** (supports `.xml` and `.xml.gz`) or select a local file.
+2. Click **Load EPG**. The app displays the number of indexed channels and programs.
+3. The interface cards will start displaying the **current program**, a progress bar, and the **next program**. In the player, press `I` for details or `G` to open the channel's full guide.
 
-> O cruzamento é feito pelo atributo `tvg-id` das tags `<channel>`/`<programme>` do XMLTV e pelo
-> `tvg-id` presente nos `#EXTINF` da lista M3U.
+> Matching is performed using the `tvg-id` attribute from the XMLTV `<channel>`/`<programme>` tags and the `tvg-id` found in the M3U playlist's `#EXTINF` entries.
 
-### 3. Assistir
+### 3. Watching Content
 
-- **Início**: banner em destaque + linhas por categoria (navegue com as setas e `Enter`, ou
-  aponte e clique com o mouse).
-- **Canais/Filmes/Séries**: use `← → ↑ ↓` na barra de categorias e na grade; `Enter` reproduz.
-  Com mouse: passe sobre o card e clique.
-- No player: `↑ ↓` zapeia os canais (ou use os botões ↕ na barra de controles), `G` abre o guia,
-  `Esc` volta.
+- **Home**: featured banner + category rows (navigate using the arrow keys and `Enter`, or point and click with the mouse).
+- **Channels/Movies/Series**: use `← → ↑ ↓` on the category bar and grid; press `Enter` to play. With the mouse, hover over a card and click.
+- In the player: `↑ ↓` switches channels (or use the ↕ buttons on the control bar), `G` opens the guide, and `Esc` goes back.
 
 ---
 
-## 🧭 Estrutura do projeto
+## 🧭 Project Structure
 
-```
+```text
 mmz-iptv-player/
-├── build/                       # ícone e recursos do instalador
+├── build/                       # icon and installer resources
 ├── scripts/
-│   ├── generate-icon.js         # gera o ícone PNG sem dependências
-│   ├── run-tests.mjs            # compila e roda os testes de fumaça (npm test)
-│   └── _test/                   # testes: parsers.test.ts, services.test.ts, e2e.mjs (visual)
+│   ├── generate-icon.js         # generates the PNG icon without dependencies
+│   ├── run-tests.mjs            # compiles and runs smoke tests (npm test)
+│   └── _test/                   # tests: parsers.test.ts, services.test.ts, e2e.mjs (visual)
 ├── src/
-│   ├── main/                    # processo MAIN (Electron)
-│   │   ├── index.ts             # criação da janela, app lifecycle
-│   │   ├── ipc.ts               # registro dos handlers IPC
+│   ├── main/                    # MAIN process (Electron)
+│   │   ├── index.ts             # window creation, app lifecycle
+│   │   ├── ipc.ts               # IPC handler registration
 │   │   ├── services/
-│   │   │   ├── storage.ts       # persistência (store.json, cache de canais, EPG gz)
-│   │   │   ├── source.ts        # download/leitura de URLs e arquivos locais (+ retry com UA)
-│   │   │   ├── playlist.ts      # parse M3U, dedupe e detecção live/VOD/séries
-│   │   │   ├── i18n.ts          # tradução das mensagens de erro do processo principal
-│   │   │   └── epg.ts           # parse XMLTV, índice now/next e schedule
+│   │   │   ├── storage.ts       # persistence (store.json, channel cache, compressed EPG)
+│   │   │   ├── source.ts        # downloads/reads URLs and local files (+ retry with UA)
+│   │   │   ├── playlist.ts      # M3U parsing, deduplication, and live/VOD/series detection
+│   │   │   ├── i18n.ts          # translates error messages from the main process
+│   │   │   └── epg.ts           # XMLTV parsing, now/next index, and schedule
 │   │   └── types/
 │   ├── preload/
 │   │   ├── index.ts             # contextBridge -> window.mmz
 │   │   └── index.d.ts
-│   ├── renderer/                # processo RENDERER (React)
+│   ├── renderer/                # RENDERER process (React)
 │   │   ├── index.html
 │   │   └── src/
 │   │       ├── App.tsx
 │   │       ├── components/
-│   │       │   ├── channels/    # ChannelCard, ChannelGrid (virtualizada), CategoryBar
+│   │       │   ├── channels/    # ChannelCard, ChannelGrid (virtualized), CategoryBar
 │   │       │   ├── layout/      # Sidebar, TopBar
 │   │       │   ├── player/      # PlayerOverlay (hls.js), GuideOverlay (EPG)
 │   │       │   └── ui/          # Toast, EmptyState
-│   │       ├── hooks/           # useKeyHandler, useAppKeys (teclado global + EPG sync), useT (i18n)
-│   │       ├── screens/         # Home, Content (canais/VOD/séries), Settings
-│   │       ├── store/           # Zustand + seletores
-│   │       └── utils/           # formatação de tempo/EPG
-│   └── shared/                  # tipos e utilitários compartilhados (isomórficos)
-│       ├── channel.ts           # detecção live/VOD/séries a partir da URL e do grupo
-│       ├── i18n.ts              # dicionários pt/en/es + translate()
-│       └── types.ts             # tipos de canal, EPG e configurações
+│   │       ├── hooks/           # useKeyHandler, useAppKeys (global keyboard + EPG sync), useT (i18n)
+│   │       ├── screens/         # Home, Content (channels/VOD/series), Settings
+│   │       ├── store/           # Zustand + selectors
+│   │       └── utils/           # time/EPG formatting
+│   └── shared/                  # shared (isomorphic) types and utilities
+│       ├── channel.ts           # live/VOD/series detection based on URL and group
+│       ├── i18n.ts              # pt/en/es dictionaries + translate()
+│       └── types.ts             # channel, EPG, and settings types
 ├── electron.vite.config.ts
 ├── electron-builder.yml
 ├── tailwind.config.js
 └── package.json
 ```
 
-## 🔐 Segurança
+## 🔐 Security
 
-- `contextIsolation: true` e `nodeIntegration: false`; o renderer acessa o sistema apenas pela
-  ponte `window.mmz` exposta pelo preload.
-- Links externos são abertos no navegador padrão do sistema (`setWindowOpenHandler`).
-- CSP restritiva no `index.html`.
+- `contextIsolation: true` and `nodeIntegration: false`; the renderer accesses the system only through the `window.mmz` bridge exposed by the preload script.
+- External links are opened in the system's default browser (`setWindowOpenHandler`).
+- Restrictive CSP in `index.html`.
 
-## ❓ Solução de problemas
+## ❓ Troubleshooting
 
-| Sintoma | Solução |
+| Issue | Solution |
 | --- | --- |
-| Stream não carrega | Confirme se a URL abre em um navegador; muitos servidores exigem rede/VPN específicas. O app tenta reconectar automaticamente 4 vezes. |
-| *"A URL respondeu, mas o conteúdo não parece uma lista M3U/M3U8"* | A resposta foi uma **página HTML** (página de login, index ou erro), não o conteúdo da lista. Use o link direto do arquivo (em sites como o Pastebin, o endereço `/raw/`). |
-| *"Endereço não reconhecido"* | Informe uma URL completa começando com `http://`/`https://`, ou selecione um arquivo local. |
-| *"Arquivo não encontrado"* | O caminho local não existe (o arquivo foi movido/renomeado). Selecione-o novamente. |
-| Aba Filmes/Séries vazia | A lista provavelmente não tem VOD — e isso é o esperado. Se os streams VOD estão dentro de grupos de canais ao vivo, ative a preferência **Exibir também canais lineares cujo grupo indica filme/série**. |
-| Interface em outro idioma | **Ajustes → Preferências → Idioma do app** (Português (Brasil), English, Español). |
-| EPG vazio | Verifique se o `tvg-id` da lista M3U existe entre os `<channel id="...">` do XMLTV. |
-| Sem logos | Algumas listas usam URLs quebradas; o app mostra a sigla do canal automaticamente. |
-| Lista grande demais | A grade é virtualizada; ainda assim, listas com +20k canais podem demorar alguns segundos no 1º parse. |
-| `npm run dist:win` falha com *"Cannot create symbolic link"* | O cache `winCodeSign` do electron-builder extrai symlinks. Ative o **Modo Desenvolvedor** do Windows (Configurações → Privacidades → Para desenvolvedores) ou execute o terminal como Administrador e tente novamente. No Linux isso não ocorre. |
+| Stream won't load | Check whether the URL opens in a browser; many servers require a specific network/VPN. The app automatically attempts to reconnect 4 times. |
+| *"The URL responded, but the content does not appear to be an M3U/M3U8 playlist"* | The response was an **HTML page** (login page, index page, or error page), not the playlist content. Use the direct file link (on sites like Pastebin, use the `/raw/` URL). |
+| *"Unrecognized address"* | Enter a complete URL starting with `http://`/`https://`, or select a local file. |
+| *"File not found"* | The local path does not exist (the file may have been moved or renamed). Select it again. |
+| Movies/Series tab is empty | The playlist probably does not contain VOD content — this is expected. If VOD streams are inside live TV groups, enable the **Also show linear channels whose group indicates movies/series** preference. |
+| Interface is in another language | Go to **Settings → Preferences → App Language** (Português (Brasil), English, Español). |
+| EPG is empty | Check whether the M3U playlist's `tvg-id` exists among the XMLTV `<channel id="...">` entries. |
+| No logos | Some playlists use broken URLs; the app automatically displays the channel initials instead. |
+| Playlist is too large | The grid is virtualized; however, playlists with more than 20k channels may still take a few seconds to parse the first time. |
+| `npm run dist:win` fails with *"Cannot create symbolic link"* | The `winCodeSign` cache used by electron-builder extracts symlinks. Enable **Windows Developer Mode** (Settings → Privacy → For developers) or run the terminal as Administrator and try again. This does not occur on Linux. |
 
-## 📄 Licença
+## 📄 License
 
 MIT © MMZ
