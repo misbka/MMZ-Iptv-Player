@@ -1,0 +1,51 @@
+{
+  "name": "mmz-iptv-player",
+  "productName": "MMZ IPTV PLAYER",
+  "version": "1.0.0",
+  "description": "Player de IPTV para Windows e Linux com interface inspirada em Smart TV (Claro TV+)",
+  "main": "./out/main/index.js",
+  "author": "MMZ",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "electron-vite dev",
+    "start": "electron-vite preview",
+    "build": "electron-vite build",
+    "icon": "node scripts/generate-icon.js",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "test": "node scripts/run-tests.mjs",
+    "test:e2e": "node scripts/_test/e2e.mjs",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "dist": "npm run build && electron-builder -w -l",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.1.0",
+    "fast-xml-parser": "^4.5.0",
+    "hls.js": "^1.5.17",
+    "iptv-playlist-parser": "^0.12.0",
+    "lucide-react": "^0.454.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-window": "^1.8.10",
+    "zustand": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.11",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@types/react-window": "^1.8.8",
+    "@vitejs/plugin-react": "^4.3.2",
+    "autoprefixer": "^10.4.20",
+    "electron": "^33.0.2",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^2.3.0",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  }
+}

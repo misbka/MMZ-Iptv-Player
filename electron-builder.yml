@@ -1,0 +1,53 @@
+appId: com.mmz.iptvplayer
+productName: MMZ IPTV PLAYER
+copyright: Copyright © 2026 MMZ
+
+directories:
+  output: dist
+  buildResources: build
+
+files:
+  - out/**/*
+  - package.json
+
+asar: true
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  artifactName: ${productName}-${version}-setup.${ext}
+  icon: build/icon.png
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: MMZ IPTV PLAYER
+  installerIcon: build/icon.png
+  uninstallerIcon: build/icon.png
+
+linux:
+  target:
+    - target: AppImage
+      arch:
+        - x64
+    - target: deb
+      arch:
+        - x64
+  icon: build/icon.png
+  category: AudioVideo
+  maintainer: MMZ <contato@mmz.dev>
+  synopsis: Player de IPTV para Linux
+  desktop:
+    entry:
+      Name: MMZ IPTV PLAYER
+      Categories: AudioVideo;Video;Player;
+      StartupWMClass: mmz-iptv-player
+
+deb:
+  compression: xz
+  priority: optional
